@@ -1,26 +1,27 @@
-let &t_SI = "\e[=1c"
-let &t_EI = "\e[=2c"
+call plug#begin('~/.vim/plugins')
 
-call plug#begin('~/.vim/plugins')" Use release branch (Recommend)
-" Intellisence 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
-Plug 'altercation/vim-colors-solarized'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'honza/vim-snippets'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-commentary'
+Plug 'sjl/vitality.vim'
+Plug 'lervag/vimtex'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'lifepillar/vim-solarized8'
+Plug 'elmcast/elm-vim'
+Plug 'noahfrederick/vim-skeleton'
 
 call plug#end()
 
-
 "Personal settings Steffen Sande
-
 set relativenumber number
-set clipboard=unnamedplus
+set clipboard=unnamed
 set ts=2
 set sw=0
 set sts=0
@@ -30,18 +31,24 @@ nmap <space> <nop>
 vmap <space> <nop>
 
 "Solarized
-set background=dark
-colorscheme solarized
 let g:mkdp_auto_start = 1
 filetype plugin on
 syntax enable
-highlight clear SignColumn
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set background=dark
+colorscheme solarized8
 
 "Nerd tree
 map <C-n> :NERDTreeToggle<CR>
 
 " Mappings fzf
 nmap <leader><leader> :Files<cr>
+
+" Latex
+let g:vimtex_view_method = 'skim'
+
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -83,6 +90,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <space>e <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -105,11 +113,8 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>r <Plug>(coc-rename)
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -118,28 +123,11 @@ augroup mygroup
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>f  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Introduce function text object
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for selections ranges.
-" NOTE: Requires 'textDocument/selectionRange' support from the language server.
-" coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -155,3 +143,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+set backspace=indent,eol,start
+
+" Setup prettier command
+command! -nargs=0 Prettier :CocCommand prettier.formatFile

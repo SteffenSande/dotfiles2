@@ -1,0 +1,60 @@
+" Space is a keybinding option rather than an l action.
+map <space> <nop>
+" Some settings
+" Activates surround with
+" Multiple cursers
+" SmartCase searching
+" Også satt relative numbering av codelinjer
+" Ikke ring noen bjeller når det skjer en feil.
+set surround
+set multiple-cursors
+set argtextobj
+set commentary
+set visualbell
+set easymotion
+set NERDTree
+set noerrorbells
+set number relativenumber
+set ignorecase
+
+" Costum mappings for JetBrains
+map <space>f :action ShowIntentionActions<cr>
+map <space>F :action ResourceBundleEditorShowIntentions<cr>
+
+map <space>b :action ToggleLineBreakpoint<cr>
+map <Space>t :action FindInPath<CR>
+map <Space>T :action ReplaceInPath<CR>
+map <space>r :action RenameElement<CR>
+map <space>R :action RenameFile<cr>
+map <space>e :action GotoNextError<CR>
+map <space>E :action GotoPreviousError<CR>
+
+map <space>c <Action>(CodeCleanup)
+
+map <space>d :action Run<cr>
+map <space>D :action Debug<cr>
+map <space>s :action Javascript.Linters.EsLint.Fix<cr>
+map <space>x :action ShowErrorDescription<cr>
+
+map <space>v :action SplitVertically<cr>
+map <space>h :action SplitHorizontally<cr>
+map <space>q :action CloseAllEditors<cr>
+map <space>k :action ActivateTerminalToolWindow<cr>
+map <space><space> :action SearchEverywhere<cr>
+
+" Go to mappings
+map gi :action GotoImplementation<CR>
+map ge :action Switcher<cr>
+map gafk :action ToggleDistractionFreeMode<cr>
+map gh :action HideAllWindows<cr>
+
+" Open nerdtree
+map <space>m :NERDTree<cr>
+
+" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
+map <space>nn <Plug>NextOccurrence
+map <space>nw <Plug>NextWholeOccurrence
+map <space>ns <Plug>SkipOccurrence
+map <space>nx <Plug>RemoveOccurrence
+map <space>na <Plug>AllOccurrences
+
